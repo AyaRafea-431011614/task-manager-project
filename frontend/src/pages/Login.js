@@ -4,10 +4,20 @@ function Login() {
       <h2>Student Task Manager</h2>
       <h3>Login</h3>
 
-      <input type="email" placeholder="Email" />
+      <div>
+        <label>Email:</label>
+        <br />
+        <input type="email" placeholder="Enter email" />
+      </div>
+
       <br />
 
-      <input type="password" placeholder="Password" />
+      <div>
+        <label>Password:</label>
+        <br />
+        <input type="password" placeholder="Enter password" />
+      </div>
+
       <br />
 
       <button>Login</button>
