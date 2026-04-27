@@ -6,14 +6,20 @@ function Login() {
   const [message, setMessage] = useState("");
 
   const handleLogin = () => {
-    if (email === "" || password === "") {
-      setMessage("Please enter email and password.");
-      return;
-    }
+  if (email === "" || password === "") {
+    setMessage("Please enter email and password.");
+    return;
+  }
 
-    setMessage("Login successful.");
-    console.log("Login:", email, password);
-  };
+  // Simple role logic
+  if (email === "admin@gmail.com") {
+    setMessage("Admin login successful.");
+    console.log("Go to Admin Dashboard");
+  } else {
+    setMessage("Student login successful.");
+    console.log("Go to Student Dashboard");
+  }
+};
 
   return (
     <div>
