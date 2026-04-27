@@ -1,26 +1,42 @@
+import { useState } from "react";
+
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleLogin = () => {
+    if (email === "" || password === "") {
+      setMessage("Please enter email and password.");
+      return;
+    }
+
+    setMessage("Login successful.");
+    console.log("Login:", email, password);
+  };
+
   return (
     <div>
       <h2>Student Task Manager</h2>
       <h3>Login</h3>
 
       <div>
-        <label>Email:</label>
-        <br />
-        <input type="email" placeholder="Enter email" />
+        <label>Email:</label><br />
+        <input type="email" onChange={(e) => setEmail(e.target.value)} />
       </div>
 
       <br />
 
       <div>
-        <label>Password:</label>
-        <br />
-        <input type="password" placeholder="Enter password" />
+        <label>Password:</label><br />
+        <input type="password" onChange={(e) => setPassword(e.target.value)} />
       </div>
 
       <br />
 
-      <button>Login</button>
+      <button onClick={handleLogin}>Login</button>
+
+      <p>{message}</p>
     </div>
   );
 }
