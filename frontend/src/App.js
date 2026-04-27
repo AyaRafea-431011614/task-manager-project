@@ -1,10 +1,11 @@
-import Register from "./pages/Register";
+import StudentDashboard from "./pages/StudentDashboard";
 
 function App() {
   return (
     <div>
-      <Register />
+      <StudentDashboard />
     </div>
   );
 }
+
 export default App;
