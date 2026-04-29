@@ -20,7 +20,7 @@ function App() {
       <hr />
 
       {page === "login" && <Login setPage={setPage} />}
-      {page === "register" && <Register />}
+      {page === "register" && <Register setPage={setPage} />}
       {page === "student" && <StudentDashboard />}
       {page === "admin" && <AdminDashboard />}
     </div>

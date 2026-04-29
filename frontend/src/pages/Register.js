@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Register() {
+function Register({ setPage }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +14,7 @@ function Register() {
     }
 
     setMessage("Registration successful.");
+    setPage("student");
     console.log("Registered user:", name, email, password, group);
   };
 
