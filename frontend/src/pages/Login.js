@@ -1,25 +1,21 @@
 import { useState } from "react";
 
-function Login() {
+function Login({ setPage }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleLogin = () => {
-  if (email === "" || password === "") {
-    setMessage("Please enter email and password.");
-    return;
-  }
+    if (email === "" || password === "") {
+      alert("Please enter email and password.");
+      return;
+    }
 
-  // Simple role logic
-  if (email === "admin@gmail.com") {
-    setMessage("Admin login successful.");
-    console.log("Go to Admin Dashboard");
-  } else {
-    setMessage("Student login successful.");
-    console.log("Go to Student Dashboard");
-  }
-};
+    if (email === "admin@gmail.com") {
+      setPage("admin");
+    } else {
+      setPage("student");
+    }
+  };
 
   return (
     <div>
@@ -40,9 +36,7 @@ function Login() {
 
       <br />
 
-      <button onClick={handleLogin}>Login</button>
-
-      <p>{message}</p>
+      <button type="button" onClick={handleLogin}>Login</button>
     </div>
   );
 }
