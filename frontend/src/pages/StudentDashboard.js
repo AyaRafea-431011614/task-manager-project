@@ -1,4 +1,31 @@
+import { useState } from "react";
+
 function StudentDashboard() {
+  const [tasks, setTasks] = useState([
+    { title: "Finish assignment", deadline: "2026-05-01", status: "Pending" },
+    { title: "Study for quiz", deadline: "2026-05-03", status: "Done" },
+  ]);
+
+  const [title, setTitle] = useState("");
+  const [deadline, setDeadline] = useState("");
+
+  const addTask = () => {
+    if (title === "" || deadline === "") {
+      alert("Please enter task title and deadline.");
+      return;
+    }
+
+    const newTask = {
+      title: title,
+      deadline: deadline,
+      status: "Pending",
+    };
+
+    setTasks([...tasks, newTask]);
+    setTitle("");
+    setDeadline("");
+  };
+
   return (
     <div>
       <h2>Student Dashboard</h2>
@@ -6,20 +33,31 @@ function StudentDashboard() {
       <h3>My Tasks</h3>
 
       <ul>
-        <li>Finish assignment - Pending</li>
-        <li>Study for quiz - Done</li>
-        <li>Submit project report - Pending</li>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task.title} - {task.deadline} - {task.status}
+          </li>
+        ))}
       </ul>
 
       <h3>Add New Task</h3>
 
-      <input type="text" placeholder="Task title" />
+      <input
+        type="text"
+        placeholder="Task title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <br /><br />
 
-      <input type="date" />
+      <input
+        type="date"
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
+      />
       <br /><br />
 
-      <button>Add Task</button>
+      <button onClick={addTask}>Add Task</button>
     </div>
   );
 }
