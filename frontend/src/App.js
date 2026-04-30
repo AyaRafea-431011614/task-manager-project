@@ -11,10 +11,11 @@ function App() {
 
   const [tasks, setTasks] = useState([
     { title: "Finish assignment", deadline: "2026-05-01", status: "Pending" },
-    { title: "Study for quiz", deadline: "2026-05-03", status: "Done" },
+    { title: "Study for quiz", deadline: "2026-05-03", status: "Pending" },
   ]);
 
   const [user, setUser] = useState(null);
+  
 
   return (
     <div className="app-container">

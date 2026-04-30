@@ -3,10 +3,11 @@ import { useState } from "react";
 function StudentDashboard({ tasks, setTasks, user, setUser, setPage }) {
   const [title, setTitle] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [message, setMessage] = useState("");
 
   const addTask = () => {
     if (title === "" || deadline === "") {
-      alert("Please enter task title and deadline.");
+     setMessage("Please enter task title and deadline.");
       return;
     }
 
@@ -22,15 +23,23 @@ function StudentDashboard({ tasks, setTasks, user, setUser, setPage }) {
   };
 
   const markAsDone = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].status = "Done";
-    setTasks(updatedTasks);
-  };
+  if (!window.confirm("Mark this task as done?")) return;
+
+  const updatedTasks = [...tasks];
+  updatedTasks[index].status = "Done";
+  setTasks(updatedTasks);
+};
 
   const handleLogout = () => {
     setUser(null);
     setPage("login");
   };
+  const deleteTask = (index) => {
+  if (!window.confirm("Are you sure you want to delete this task?")) return;
+
+  const updatedTasks = tasks.filter((_, i) => i !== index);
+  setTasks(updatedTasks);
+};
 
   return (
     <div className="card">
@@ -50,15 +59,19 @@ function StudentDashboard({ tasks, setTasks, user, setUser, setPage }) {
               </div>
 
               <div className="task-actions">
-                <span className={`badge ${task.status === "Done" ? "done" : "pending"}`}>
-                  {task.status}
-                </span>
+               <span
+  className={`badge ${
+    task.status === "Done" ? "done deletable" : "pending actionable"
+  }`}
+  onClick={() => {
+    if (task.status === "Done") deleteTask(index);
+    else markAsDone(index);
+  }}
+>
+  <span>{task.status}</span>
+</span>
 
-                {task.status === "Pending" && (
-                  <button onClick={() => markAsDone(index)}>
-                    Done
-                  </button>
-                )}
+                
               </div>
 
             </li>
@@ -83,6 +96,7 @@ function StudentDashboard({ tasks, setTasks, user, setUser, setPage }) {
       <br /><br />
 
       <button onClick={addTask}>Add Task</button>
+      <p className="message">{message}</p>
 
       <button
         style={{ marginTop: "20px", background: "#dc2626" }}

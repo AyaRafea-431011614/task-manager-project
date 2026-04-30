@@ -104,23 +104,82 @@ li {
 }
 
 .badge {
-  padding: 4px 10px;
+  padding: 6px 14px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
-  margin-left: 10px;
+  min-width: 70px;
+  text-align: center;
 }
 
 .badge.pending {
-  background: #facc15;
+  background: #eab308; /* yellow */
   color: #333;
 }
 
 .badge.done {
-  background: #22c55e;
+  background: #22c55e; /* green */
   color: white;
 }
 
 .task-actions button {
   margin-left: 10px;
+}
+.deletable {
+  position: relative;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.deletable span {
+  display: inline-block;
+  width: 100%;
+}
+
+/* Hover state */
+.deletable:hover {
+  background: #dc2626 !important;
+  color: transparent; /* hide original text */
+  cursor: pointer;
+}
+
+.deletable:hover::after {
+  content: "Delete";
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+/* Pending → hover shows Done */
+.actionable {
+  position: relative;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.actionable span {
+  display: inline-block;
+  width: 100%;
+}
+
+.actionable:hover {
+  background: #22c55e !important; /* green */
+  color: transparent;
+  cursor: pointer;
+}
+
+.actionable:hover::after {
+  content: "Done";
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
 }

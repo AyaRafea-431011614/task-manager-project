@@ -63,7 +63,9 @@ function AdminDashboard({ tasks, setTasks, setUser, setPage }) {
       <h3>Assigned Tasks</h3>
 
       <ul>
-        {tasks.map((task, index) => (
+        {tasks
+  .filter((task) => task.group)
+  .map((task, index) => (
           <li key={index}>
             {task.title} - {task.group || "Personal"} - {task.deadline} - {task.status}
           </li>
