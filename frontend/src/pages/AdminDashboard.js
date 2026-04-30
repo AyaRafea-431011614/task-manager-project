@@ -1,10 +1,6 @@
 import { useState } from "react";
 
-function AdminDashboard() {
-  const [tasks, setTasks] = useState([
-    { title: "Project report", group: "Group A", deadline: "2026-05-05", status: "Pending" }
-  ]);
-
+function AdminDashboard({ tasks, setTasks }) {
   const [title, setTitle] = useState("");
   const [group, setGroup] = useState("");
   const [deadline, setDeadline] = useState("");
