@@ -22,6 +22,12 @@ const [user, setUser] = useState(null);
         <button onClick={() => setPage("register")}>Register</button>
         <button onClick={() => setPage("student")}>Student Dashboard</button>
         <button onClick={() => setPage("admin")}>Admin Dashboard</button>
+        <button onClick={() => {
+  setUser(null);
+  setPage("login");
+}}>
+  Logout
+</button>
       </nav>
 
       <hr />
