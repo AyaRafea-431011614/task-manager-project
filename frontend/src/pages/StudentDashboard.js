@@ -26,6 +26,12 @@ function StudentDashboard() {
     setDeadline("");
   };
 
+  const markAsDone = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].status = "Done";
+    setTasks(updatedTasks);
+  };
+
   return (
     <div>
       <h2>Student Dashboard</h2>
@@ -36,6 +42,9 @@ function StudentDashboard() {
         {tasks.map((task, index) => (
           <li key={index}>
             {task.title} - {task.deadline} - {task.status}
+            {task.status === "Pending" && (
+              <button onClick={() => markAsDone(index)}>Mark as Done</button>
+            )}
           </li>
         ))}
       </ul>
