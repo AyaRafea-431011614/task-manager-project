@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function StudentDashboard({ tasks, setTasks }) {
+function StudentDashboard({ tasks, setTasks, user }) {
   const [title, setTitle] = useState("");
   const [deadline, setDeadline] = useState("");
 
@@ -35,7 +35,7 @@ function StudentDashboard({ tasks, setTasks }) {
 
       <ul>
        {tasks
-  .filter((task) => !task.group || task.group === "A")
+  .filter((task) => !task.group || task.group === user?.group)
   .map((task, index) => (
           <li key={index}>
             {task.title} - {task.deadline} - {task.status}

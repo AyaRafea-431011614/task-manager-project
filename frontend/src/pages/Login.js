@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Login({ setPage }) {
+function Login({ setPage, setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,10 +11,12 @@ function Login({ setPage }) {
     }
 
     if (email === "admin@gmail.com") {
-      setPage("admin");
-    } else {
-      setPage("student");
-    }
+  setUser({ email: email, role: "admin", group: null });
+  setPage("admin");
+} else {
+  setUser({ email: email, role: "student", group: "A" });
+  setPage("student");
+}
   };
 
   return (

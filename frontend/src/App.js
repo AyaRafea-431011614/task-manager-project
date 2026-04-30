@@ -7,10 +7,13 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const [page, setPage] = useState("login");
-  const [tasks, setTasks] = useState([
+
+const [tasks, setTasks] = useState([
   { title: "Finish assignment", deadline: "2026-05-01", status: "Pending" },
   { title: "Study for quiz", deadline: "2026-05-03", status: "Done" },
 ]);
+
+const [user, setUser] = useState(null);
 
   return (
     <div>
@@ -23,9 +26,9 @@ function App() {
 
       <hr />
 
-      {page === "login" && <Login setPage={setPage} />}
+      {page === "login" && <Login setPage={setPage} setUser={setUser} />}
       {page === "register" && <Register setPage={setPage} />}
-      {page === "student" && <StudentDashboard tasks={tasks} setTasks={setTasks} />}
+      {page === "student" && <StudentDashboard tasks={tasks} setTasks={setTasks} user={user} />}
       {page === "admin" && <AdminDashboard tasks={tasks} setTasks={setTasks} />}
     </div>
   );
