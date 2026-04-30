@@ -28,23 +28,37 @@ function StudentDashboard({ tasks, setTasks, user }) {
   };
 
   return (
-    <div>
+   <div className="card">
       <h2>Student Dashboard</h2>
 
       <h3>My Tasks</h3>
 
       <ul>
-       {tasks
-  .filter((task) => !task.group || task.group === user?.group)
-  .map((task, index) => (
-          <li key={index}>
-            {task.title} - {task.deadline} - {task.status}
-            {task.status === "Pending" && (
-              <button onClick={() => markAsDone(index)}>Mark as Done</button>
-            )}
-          </li>
-        ))}
-      </ul>
+  {tasks
+    .filter((task) => !task.group || task.group === user?.group)
+    .map((task, index) => (
+      <li key={index} className="task-item">
+        
+        <div className="task-info">
+          <strong>{task.title}</strong>
+          <span>{task.deadline}</span>
+        </div>
+
+        <div className="task-actions">
+          <span className={`badge ${task.status === "Done" ? "done" : "pending"}`}>
+            {task.status}
+          </span>
+
+          {task.status === "Pending" && (
+            <button onClick={() => markAsDone(index)}>
+              Done
+            </button>
+          )}
+        </div>
+
+      </li>
+    ))}
+</ul>
 
       <h3>Add New Task</h3>
 

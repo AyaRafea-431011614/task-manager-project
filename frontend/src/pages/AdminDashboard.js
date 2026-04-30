@@ -26,7 +26,7 @@ function AdminDashboard({ tasks, setTasks }) {
   };
 
   return (
-    <div>
+    <div className="card">
       <h2>Admin Dashboard</h2>
 
       <h3>Assign Task to Group</h3>

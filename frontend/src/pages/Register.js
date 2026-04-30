@@ -19,7 +19,7 @@ function Register({ setPage }) {
   };
 
   return (
-    <div>
+   <div className="card">
       <h2>Student Task Manager</h2>
       <h3>Register</h3>
 

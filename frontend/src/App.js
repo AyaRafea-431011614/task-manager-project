@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -16,8 +17,8 @@ const [tasks, setTasks] = useState([
 const [user, setUser] = useState(null);
 
   return (
-    <div>
-      <nav>
+    <div className="app-container">
+      <nav className="navbar">
         <button onClick={() => setPage("login")}>Login</button>
         <button onClick={() => setPage("register")}>Register</button>
         <button onClick={() => setPage("student")}>Student Dashboard</button>

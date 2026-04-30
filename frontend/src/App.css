@@ -1,38 +1,126 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  color: #222;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-container {
+  max-width: 950px;
+  margin: 40px auto;
+  padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar {
+  background: #1f4e79;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar button {
+  background: white;
+  color: #1f4e79;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navbar button:hover {
+  background: #dbeafe;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+  color: #1f4e79;
+  margin-top: 0;
+}
+
+h3 {
+  margin-top: 25px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  max-width: 400px;
+  padding: 11px;
+  margin-top: 6px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+button {
+  background: #1f4e79;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+button:hover {
+  background: #163a5a;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  background: #f8fafc;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  list-style-position: inside;
+}
+
+.message {
+  color: #1f4e79;
+  font-weight: bold;
+}
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.badge.pending {
+  background: #facc15;
+  color: #333;
+}
+
+.badge.done {
+  background: #22c55e;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.task-actions button {
+  margin-left: 10px;
 }
