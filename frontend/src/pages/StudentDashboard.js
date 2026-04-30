@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function StudentDashboard({ tasks, setTasks, user }) {
+function StudentDashboard({ tasks, setTasks, user, setUser, setPage }) {
   const [title, setTitle] = useState("");
   const [deadline, setDeadline] = useState("");
 
@@ -11,8 +11,8 @@ function StudentDashboard({ tasks, setTasks, user }) {
     }
 
     const newTask = {
-      title: title,
-      deadline: deadline,
+      title,
+      deadline,
       status: "Pending",
     };
 
@@ -27,38 +27,43 @@ function StudentDashboard({ tasks, setTasks, user }) {
     setTasks(updatedTasks);
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    setPage("login");
+  };
+
   return (
-   <div className="card">
+    <div className="card">
       <h2>Student Dashboard</h2>
 
       <h3>My Tasks</h3>
 
       <ul>
-  {tasks
-    .filter((task) => !task.group || task.group === user?.group)
-    .map((task, index) => (
-      <li key={index} className="task-item">
-        
-        <div className="task-info">
-          <strong>{task.title}</strong>
-          <span>{task.deadline}</span>
-        </div>
+        {tasks
+          .filter((task) => !task.group || task.group === user?.group)
+          .map((task, index) => (
+            <li key={index} className="task-item">
+              
+              <div className="task-info">
+                <strong>{task.title}</strong>
+                <span>{task.deadline}</span>
+              </div>
 
-        <div className="task-actions">
-          <span className={`badge ${task.status === "Done" ? "done" : "pending"}`}>
-            {task.status}
-          </span>
+              <div className="task-actions">
+                <span className={`badge ${task.status === "Done" ? "done" : "pending"}`}>
+                  {task.status}
+                </span>
 
-          {task.status === "Pending" && (
-            <button onClick={() => markAsDone(index)}>
-              Done
-            </button>
-          )}
-        </div>
+                {task.status === "Pending" && (
+                  <button onClick={() => markAsDone(index)}>
+                    Done
+                  </button>
+                )}
+              </div>
 
-      </li>
-    ))}
-</ul>
+            </li>
+          ))}
+      </ul>
 
       <h3>Add New Task</h3>
 
@@ -78,6 +83,13 @@ function StudentDashboard({ tasks, setTasks, user }) {
       <br /><br />
 
       <button onClick={addTask}>Add Task</button>
+
+      <button
+        style={{ marginTop: "20px", background: "#dc2626" }}
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </div>
   );
 }

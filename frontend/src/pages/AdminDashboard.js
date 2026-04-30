@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AdminDashboard({ tasks, setTasks }) {
+function AdminDashboard({ tasks, setTasks, setUser, setPage }) {
   const [title, setTitle] = useState("");
   const [group, setGroup] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -12,17 +12,21 @@ function AdminDashboard({ tasks, setTasks }) {
     }
 
     const newTask = {
-      title: title,
-      group: group,
-      deadline: deadline,
+      title,
+      group,
+      deadline,
       status: "Pending",
     };
 
     setTasks([...tasks, newTask]);
-
     setTitle("");
     setGroup("");
     setDeadline("");
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setPage("login");
   };
 
   return (
@@ -61,10 +65,17 @@ function AdminDashboard({ tasks, setTasks }) {
       <ul>
         {tasks.map((task, index) => (
           <li key={index}>
-            {task.title} - {task.group} - {task.deadline} - {task.status}
+            {task.title} - {task.group || "Personal"} - {task.deadline} - {task.status}
           </li>
         ))}
       </ul>
+
+      <button
+        style={{ marginTop: "20px", background: "#dc2626" }}
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </div>
   );
 }
