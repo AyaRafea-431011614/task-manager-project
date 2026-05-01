@@ -22,6 +22,11 @@ router.get("/", authMiddleware, (req, res) => {
       OR tasks.group_name = ?
     `;
     values.push(req.user.id, req.user.group_name);
+  } else if (req.user.role === "admin") {
+    sql += `
+      WHERE tasks.created_by = ?
+    `;
+    values.push(req.user.id);
   }
 
   sql += " ORDER BY tasks.created_at DESC";
@@ -163,6 +168,11 @@ router.put(
         )
       `;
       values.push(req.user.id, req.user.group_name);
+    } else if (req.user.role === "admin") {
+      sql += `
+        AND created_by = ?
+      `;
+      values.push(req.user.id);
     }
 
     db.query(sql, values, (err, result) => {
@@ -194,6 +204,9 @@ router.delete("/:id", authMiddleware, (req, res) => {
 
   if (req.user.role === "student") {
     sql += " AND assigned_to = ?";
+    values.push(req.user.id);
+  } else if (req.user.role === "admin") {
+    sql += " AND created_by = ?";
     values.push(req.user.id);
   }
 
