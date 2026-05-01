@@ -1,0 +1,15 @@
+{
+  "name": "task-manager-project",
+  "version": "1.0.0",
+  "description": "Course: CSC1405 - Advanced Software Engineering   Section: 190   Team Members: - Aya Sami Rafea 431011614 - Shahd Moayad Radi Khanfar 431011613 - Raghad Salman Alsulami 441007681 - Gala Mammdouh Alrwili 441000977",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+     "start": "concurrently \"cd backend && node server.js\" \"cd frontend && npm start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
