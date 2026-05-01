@@ -122,11 +122,19 @@ function StudentDashboard({ user, setUser, setPage }) {
 };
 
 const deleteTask = async (index) => {
+  const task = tasks[index];
+
+  // 🚫 Prevent deleting group tasks
+  if (task.group_name) {
+    alert("You cannot delete group tasks.");
+    return;
+  }
+
   if (!window.confirm("Are you sure you want to delete this task?")) return;
 
   try {
     const token = localStorage.getItem("token");
-    const taskId = tasks[index].id;
+    const taskId = task.id;
 
     const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
       method: "DELETE",
@@ -138,17 +146,18 @@ const deleteTask = async (index) => {
     const data = await res.json();
 
     if (!res.ok) {
-      setMessage(data.message || "Failed to delete task.");
+      alert(data.message || "Failed to delete task.");
       return;
     }
 
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
-    setMessage("Task deleted successfully.");
+
+    alert("Task deleted successfully.");
 
   } catch (err) {
     console.error(err);
-    setMessage("Server error while deleting task.");
+    alert("Server error while deleting task.");
   }
 };
 
