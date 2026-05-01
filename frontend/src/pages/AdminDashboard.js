@@ -1,30 +1,85 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AdminDashboard({ tasks, setTasks, setUser, setPage }) {
+function AdminDashboard({ setUser, setPage }) {
+  const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [group, setGroup] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [message, setMessage] = useState("");
 
-  const assignTask = () => {
+  const fetchTasks = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:5000/api/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.message || "Failed to load tasks.");
+        return;
+      }
+
+      setTasks(data);
+    } catch (err) {
+      console.error(err);
+      setMessage("Server error while loading tasks.");
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const assignTask = async () => {
     if (title === "" || group === "" || deadline === "") {
-      alert("Please fill all fields.");
+      setMessage("Please fill all fields.");
       return;
     }
 
-    const newTask = {
-      title,
-      group,
-      deadline,
-      status: "Pending",
-    };
+    try {
+      const token = localStorage.getItem("token");
 
-    setTasks([...tasks, newTask]);
-    setTitle("");
-    setGroup("");
-    setDeadline("");
+      const res = await fetch("http://localhost:5000/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          deadline,
+          group_name: group,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.message || "Failed to assign task.");
+        return;
+      }
+
+      setMessage("Task assigned successfully.");
+
+      setTitle("");
+      setGroup("");
+      setDeadline("");
+
+      fetchTasks();
+    } catch (err) {
+      console.error(err);
+      setMessage("Server error while assigning task.");
+    }
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
     setPage("login");
   };
@@ -60,16 +115,18 @@ function AdminDashboard({ tasks, setTasks, setUser, setPage }) {
 
       <button onClick={assignTask}>Assign Task</button>
 
+      <p className="message">{message}</p>
+
       <h3>Assigned Tasks</h3>
 
       <ul>
         {tasks
-  .filter((task) => task.group)
-  .map((task, index) => (
-          <li key={index}>
-            {task.title} - {task.group || "Personal"} - {task.deadline} - {task.status}
-          </li>
-        ))}
+          .filter((task) => task.group_name)
+          .map((task) => (
+            <li key={task.id}>
+              {task.title} - {task.group_name} - {task.deadline} - {task.status}
+            </li>
+          ))}
       </ul>
 
       <button

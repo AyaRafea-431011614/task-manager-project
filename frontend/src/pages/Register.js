@@ -5,11 +5,17 @@ function Register({ setPage }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [group, setGroup] = useState("");
+  const [role, setRole] = useState("student");
   const [message, setMessage] = useState("");
 
   const handleRegister = async () => {
-    if (name === "" || email === "" || password === "" || group === "") {
-      setMessage("Please fill in all fields.");
+    if (name === "" || email === "" || password === "") {
+      setMessage("Please fill in all required fields.");
+      return;
+    }
+
+    if (role === "student" && group === "") {
+      setMessage("Please enter group for student.");
       return;
     }
 
@@ -23,8 +29,8 @@ function Register({ setPage }) {
           name,
           email,
           password,
-          role: "student",
-          group_name: group,
+          role,
+          group_name: role === "student" ? group : null,
         }),
       });
 
@@ -70,11 +76,25 @@ function Register({ setPage }) {
       <br />
 
       <div>
-        <label>Group:</label><br />
-        <input type="text" onChange={(e) => setGroup(e.target.value)} />
+        <label>Role:</label><br />
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="student">Student</option>
+          <option value="admin">Admin</option>
+        </select>
       </div>
 
       <br />
+
+      {role === "student" && (
+        <>
+          <div>
+            <label>Group:</label><br />
+            <input type="text" onChange={(e) => setGroup(e.target.value)} />
+          </div>
+
+          <br />
+        </>
+      )}
 
       <button onClick={handleRegister}>Register</button>
 
