@@ -6,48 +6,51 @@ function Login({ setPage, setUser }) {
   const [message, setMessage] = useState("");
 
   const handleLogin = async () => {
-  if (email === "" || password === "") {
-    alert("Please enter email and password.");
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.message);
+    if (email === "" || password === "") {
+      alert("Please enter email and password.");
       return;
     }
 
-    // SAVE TOKEN
-    localStorage.setItem("token", data.token);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    // SAVE USER
-    setUser(data.user);
+      const data = await res.json();
 
-    // REDIRECT
-    if (data.user.role === "admin") {
-      setPage("admin");
-    } else {
-      setPage("student");
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
+
+      // ✅ SAVE TOKEN
+      localStorage.setItem("token", data.token);
+
+      // ✅ SAVE USER (important for tasks later)
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // keep React state also
+      setUser(data.user);
+
+      // REDIRECT
+      if (data.user.role === "admin") {
+        setPage("admin");
+      } else {
+        setPage("student");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Server error.");
     }
-
-  } catch (err) {
-    console.error(err);
-    alert("Server error.");
-  }
-};
+  };
 
   return (
     <div className="card">
