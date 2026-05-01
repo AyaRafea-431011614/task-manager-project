@@ -76,7 +76,34 @@ function AdminDashboard({ setUser, setPage }) {
       setMessage("Server error while assigning task.");
     }
   };
+const deleteTask = async (taskId) => {
+  if (!window.confirm("Are you sure you want to delete this task?")) return;
 
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setMessage(data.message || "Failed to delete task.");
+      return;
+    }
+
+    setMessage("Task deleted successfully.");
+    fetchTasks();
+
+  } catch (err) {
+    console.error(err);
+    setMessage("Server error while deleting task.");
+  }
+};
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -121,12 +148,21 @@ function AdminDashboard({ setUser, setPage }) {
 
       <ul>
         {tasks
-          .filter((task) => task.group_name)
-          .map((task) => (
-            <li key={task.id}>
-              {task.title} - {task.group_name} - {task.deadline} - {task.status}
-            </li>
-          ))}
+  .filter((task) => task.group_name)
+  .map((task) => (
+    <li key={task.id} className="task-item">
+  <div className="task-info">
+    {task.title} - {task.group_name} - {task.deadline} - {task.status}
+  </div>
+
+  <button
+    className="delete-btn"
+    onClick={() => deleteTask(task.id)}
+  >
+    Delete
+  </button>
+</li>
+  ))}
       </ul>
 
       <button
