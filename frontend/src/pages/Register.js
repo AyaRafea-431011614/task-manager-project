@@ -7,19 +7,44 @@ function Register({ setPage }) {
   const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (name === "" || email === "" || password === "" || group === "") {
       setMessage("Please fill in all fields.");
       return;
     }
 
-    setMessage("Registration successful.");
-    setPage("student");
-    console.log("Registered user:", name, email, password, group);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role: "student",
+          group_name: group,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.message);
+        return;
+      }
+
+      setMessage("Account created successfully. Please login.");
+      setPage("login");
+    } catch (err) {
+      console.error(err);
+      setMessage("Server error. Please try again.");
+    }
   };
 
   return (
-   <div className="card">
+    <div className="card">
       <h2>Student Task Manager</h2>
       <h3>Register</h3>
 
@@ -53,7 +78,7 @@ function Register({ setPage }) {
 
       <button onClick={handleRegister}>Register</button>
 
-      <p>{message}</p>
+      <p className="message">{message}</p>
     </div>
   );
 }

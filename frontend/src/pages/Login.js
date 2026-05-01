@@ -5,22 +5,49 @@ function Login({ setPage, setUser }) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleLogin = () => {
-    if (email === "" || password === "") {
-      setMessage("Please enter email and password.");
+  const handleLogin = async () => {
+  if (email === "" || password === "") {
+    alert("Please enter email and password.");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
       return;
     }
 
-    if (email === "admin@gmail.com") {
-      setUser({ email: email, role: "admin", group: null });
-      setMessage("Admin login successful.");
+    // SAVE TOKEN
+    localStorage.setItem("token", data.token);
+
+    // SAVE USER
+    setUser(data.user);
+
+    // REDIRECT
+    if (data.user.role === "admin") {
       setPage("admin");
     } else {
-      setUser({ email: email, role: "student", group: "A" });
-      setMessage("Student login successful.");
       setPage("student");
     }
-  };
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error.");
+  }
+};
 
   return (
     <div className="card">
